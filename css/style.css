@@ -620,12 +620,14 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   background: var(--c-bg-alt);
   border-radius: var(--r-2);
   overflow: hidden;
+  aspect-ratio: 1;
 }
 .case-img img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 1;
   object-fit: cover;
+  object-position: center;
+  display: block;
   transition: transform var(--t-slow);
 }
 .case-img:hover img { transform: scale(1.04); }
@@ -697,7 +699,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   border-radius: var(--r-3);
   border-top: none;
 }
-.case-img--wide img { aspect-ratio: 4 / 5; }
+.case-img--wide { aspect-ratio: 4 / 5; }
 .case-grid--small {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
