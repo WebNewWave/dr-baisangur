@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Логотип Dr. Baisangur Bitiev: стилизованный зуб в монохромном стиле журнала -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-label="Логотип Dr. Baisangur Bitiev">
+  <!-- Коронка зуба (верхняя часть) -->
+  <path d="M22 10
+           C 22 6, 26 4, 32 4
+           C 38 4, 42 6, 42 10
+           C 42 16, 40 22, 38 28
+           C 36 32, 34 34, 32 34
+           C 30 34, 28 32, 26 28
+           C 24 22, 22 16, 22 10 Z"/>
+  <!-- Левый корень -->
+  <path d="M26 32
+           C 25 38, 24 46, 23 54
+           C 22 58, 24 60, 26 58
+           C 28 56, 29 48, 30 40"/>
+  <!-- Правый корень -->
+  <path d="M38 32
+           C 39 38, 40 46, 41 54
+           C 42 58, 40 60, 38 58
+           C 36 56, 35 48, 34 40"/>
+</svg>
