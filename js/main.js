@@ -60,6 +60,7 @@
     if (siteNav && siteNav.classList.contains('is-open')) {
       siteNav.classList.remove('is-open');
       if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
     }
 
     // Сброс прогресса при смене экрана
@@ -98,16 +99,28 @@
    * Mobile nav toggle
    */
   if (navToggle && siteNav) {
+    function setNavOpen(open) {
+      siteNav.classList.toggle('is-open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.classList.toggle('nav-open', open);
+    }
+
     navToggle.addEventListener('click', () => {
-      const isOpen = siteNav.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      setNavOpen(!siteNav.classList.contains('is-open'));
     });
 
     // Закрыть меню при клике на ссылку
     siteNav.addEventListener('click', (e) => {
       if (e.target.tagName === 'A') {
-        siteNav.classList.remove('is-open');
-        navToggle.setAttribute('aria-expanded', 'false');
+        setNavOpen(false);
+      }
+    });
+
+    // Закрыть меню по Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && siteNav.classList.contains('is-open')) {
+        setNavOpen(false);
+        navToggle.focus();
       }
     });
   }
