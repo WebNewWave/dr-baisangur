@@ -220,7 +220,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 }
 .section-number {
   font-family: var(--f-display);
-  font-size: clamp(56px, 9vw, 120px);
+  font-size: clamp(40px, 9vw, 120px);
   line-height: 0.85;
   color: var(--c-ink);
   font-weight: 500;
@@ -235,7 +235,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 }
 .section-title {
   font-family: var(--f-display);
-  font-size: clamp(40px, 6vw, 72px);
+  font-size: clamp(28px, 6vw, 72px);
   line-height: 1;
   font-weight: 500;
   color: var(--c-ink);
@@ -281,7 +281,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 }
 .hero-title {
   font-family: var(--f-display);
-  font-size: clamp(56px, 10vw, 140px);
+  font-size: clamp(36px, 10vw, 140px);
   line-height: 0.92;
   font-weight: 500;
   color: var(--c-blue);
@@ -890,12 +890,10 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   overflow: hidden;
 }
 .contact-photo img {
-  /* Аккуратный зум, чтобы убрать белую полосу сверху (стена/потолок) */
-  width: 112%;
-  height: 112%;
-  margin: -6% 0 0 -6%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center top;
 }
 .contact-qr-label {
   font-size: 11px;
@@ -936,6 +934,39 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 880px) {
   .contact-grid { grid-template-columns: 1fr; }
   .contact-list { grid-template-columns: 1fr; }
+}
+
+/* Мобильные контакты (<640px): фото и QR уходят наверх, CTA — во всю ширину,
+   список — плотный 2-колонный, чтобы телефоном было удобно листать. */
+@media (max-width: 640px) {
+  .contact-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  /* Фото и QR поднимаем наверх */
+  .contact-aside { order: -1; }
+  /* Фото становится компактным баннером, голова видна целиком */
+  .contact-photo {
+    aspect-ratio: 16 / 10;
+    max-height: 220px;
+  }
+  .contact-photo img { object-position: center top; }
+  .contact-qr-grid { gap: var(--space-2); }
+  /* CTA — во всю ширину карточки */
+  .contact-cta {
+    width: 100%;
+    justify-content: center;
+  }
+  /* Список контактов — плотная 2-колонная сетка */
+  .contact-list {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+  /* Лид — компактнее на телефоне */
+  .contact-lead {
+    font-size: clamp(18px, 5vw, 22px);
+  }
 }
 
 /* Компактнее экран контактов */
