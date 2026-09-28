@@ -43,8 +43,7 @@
     views.forEach((v) => {
       if (v.dataset.view === name && !found) {
         v.classList.add('is-active');
-        // Скроллим активный view наверх
-        v.scrollTop = 0;
+        // Скроллим страницу наверх при смене экрана
         found = true;
       } else {
         v.classList.remove('is-active');
@@ -129,18 +128,15 @@
    * Прогресс скролла — отслеживаем активный view
    */
   function updateProgress() {
-    const activeView = document.querySelector('.view.is-active');
-    if (!activeView || !progress) return;
-    const max = activeView.scrollHeight - activeView.clientHeight;
-    const scrolled = activeView.scrollTop;
+    if (!progress) return;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = window.scrollY || document.documentElement.scrollTop || 0;
     const pct = max > 0 ? (scrolled / max) * 100 : 0;
     progress.style.width = pct + '%';
   }
 
-  // Слушаем скролл на каждом view
-  views.forEach((v) => {
-    v.addEventListener('scroll', updateProgress, { passive: true });
-  });
+  // Прокрутка теперь на уровне страницы (body), а не внутри каждого экрана
+  window.addEventListener('scroll', updateProgress, { passive: true });
 
   // IntersectionObserver для reveal-эффектов при скролле внутри view
   const revealObserver = new IntersectionObserver(

@@ -183,27 +183,19 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 /* --- SPA-контейнер ------------------------------------------------------ */
 .spa-root {
   position: relative;
-  min-height: 100vh;
   padding-top: var(--h-header);
 }
 
-.view {
-  position: absolute;
-  inset: var(--h-header) 0 0 0;
-  overflow-y: auto;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(8px);
-  transition: opacity var(--t-base), transform var(--t-base), visibility 0s linear var(--t-base);
-  pointer-events: none;
-  scroll-behavior: smooth;
-}
+/* Каждый экран — блок в потоке документа: прокрутка идёт на уровне body,
+   поэтому подвал ведёт себя естественно и не «залипает» снизу при скролле. */
+.view { display: none; }
 .view.is-active {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  transition: opacity var(--t-base), transform var(--t-base), visibility 0s;
-  pointer-events: auto;
+  display: block;
+  animation: viewIn var(--t-base);
+}
+@keyframes viewIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
 }
 
 .view-inner {
@@ -261,18 +253,19 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* --- 01 Hero ------------------------------------------------------------ */
-.view-hero {
+.view-hero.is-active {
   display: flex;
   flex-direction: column;
   justify-content: center;
   background: var(--c-bg);
+  min-height: calc(100vh - var(--h-header));
 }
 .hero-grid {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
-  gap: var(--space-7);
+  gap: var(--space-5);
   align-items: center;
-  padding: var(--space-6) var(--space-5) var(--space-7);
+  padding: var(--space-5) var(--space-5) var(--space-6);
   max-width: 1320px;
   width: 100%;
   margin: 0 auto;
@@ -346,7 +339,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 
 .hero-photo {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   background: var(--c-blue);
   border-radius: var(--r-3);
   overflow: hidden;
@@ -355,7 +348,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center top;
   filter: contrast(1.02) saturate(0.96);
 }
 .hero-photo-credit {
@@ -396,7 +389,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
     gap: var(--space-5);
     padding-top: var(--space-5);
   }
-  .hero-photo { max-width: 480px; margin: 0 auto; width: 100%; }
+  .hero-photo { max-width: 420px; margin: 0 auto; width: 100%; }
   .hero-strip { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -828,7 +821,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .contact-grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
-  gap: var(--space-6);
+  gap: var(--space-4);
   align-items: start;
 }
 .contact-lead {
@@ -836,18 +829,18 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   font-size: clamp(22px, 2.4vw, 28px);
   line-height: 1.4;
   color: var(--c-ink);
-  margin: 0 0 var(--space-5);
+  margin: 0 0 var(--space-4);
   font-style: italic;
 }
 .contact-cta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-5);
+  padding: var(--space-4);
   background: var(--c-ink);
   color: var(--c-bg);
   border-radius: var(--r-3);
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-4);
   transition: transform var(--t-fast), background var(--t-fast);
 }
 .contact-cta:hover { transform: translateY(-2px); background: var(--c-blue-deep); }
@@ -870,7 +863,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .contact-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-4) var(--space-5);
+  gap: var(--space-3) var(--space-4);
 }
 .contact-list li { font-size: 15px; line-height: 1.55; color: var(--c-text); }
 .contact-label {
@@ -889,7 +882,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 }
 .contact-list a:hover { border-bottom-color: var(--c-ink); }
 
-.contact-aside { display: flex; flex-direction: column; gap: var(--space-4); }
+.contact-aside { display: flex; flex-direction: column; gap: var(--space-3); }
 .contact-photo {
   aspect-ratio: 4 / 5;
   background: var(--c-blue);
@@ -915,14 +908,14 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .contact-qr-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 .contact-qr-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding: var(--space-4);
+  padding: var(--space-3);
   background: var(--c-white);
   border: 1px solid var(--c-line);
   border-radius: var(--r-3);
@@ -945,6 +938,12 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   .contact-list { grid-template-columns: 1fr; }
 }
 
+/* Компактнее экран контактов */
+.view-contact .view-inner {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
+}
+
 /* --- Подвал ------------------------------------------------------------- */
 .site-footer {
   background: var(--c-ink);
@@ -965,7 +964,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   align-items: center;
   gap: var(--space-3);
 }
-.footer-logo { color: var(--c-bg); }
+.footer-logo { color: var(--c-bg); filter: brightness(0) invert(1); opacity: 0.92; }
 .footer-name {
   font-family: var(--f-display);
   font-size: 18px;
