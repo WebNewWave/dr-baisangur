@@ -705,7 +705,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: 65% center;
 }
 /* Кейс 2 — сдвиги композиции */
 .case-block:nth-of-type(2) .case-images .case-img:nth-child(1) img,
